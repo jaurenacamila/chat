@@ -22,6 +22,7 @@
         let start= 0;
         let url = 'http://localhost/chat.php'
 
+        //hace el post a la base de datos
         $(document).ready(function(){
             from=prompt('Por favor ingrese su nombre'); 
             load();
@@ -36,6 +37,7 @@
             })
         })
 
+        //muestra los mensajes
         function load(){
             $.get(url + '?start=' + start,function(result){
                 if(result.items){
@@ -43,15 +45,20 @@
                         start = item.id;
                         $('#messages').append(renderMessage(item));
                     });
+                    /* ver scroll */
+                    $('#messages').animate({scrollTop: $('#message')[0].scrollHeight});
                 }
                 load();
             });
         }
 
+        //da formato al mensaje
         function renderMessage(item){
-            console.log(item)
+            let time = new Date(item.created);
+            time = `${time.getHours()}:${time.getMinutes() <10 ? '0' : ''}${time.getMinutes()}`;
+            return `<div class="msg"><p>${item.from}</p>${item.message}<span>${time}</span></div>`;
         }
-        
+
     </script>
 </body>
 </html>

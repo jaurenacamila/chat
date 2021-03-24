@@ -28,3 +28,21 @@ input{
 #message{
     flex: 2;
 }
+
+.msg{
+    background-color: #dcf8dc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    width: fit-content;
+}
+
+.msg p{
+    margin: 0;
+    font-weight: bold;
+}
+
+.msg span{
+    font-size: 12px;
+    margin-left: 15px;
+}
