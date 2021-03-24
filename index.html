@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat test</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div id="messages"></div>
+    <form>
+        <input type="text" id="message" autocomplete="off" autofocus placeholder="Escribe un mensaje">
+        <input type="submit" value="Enviar">
+    </form>
+
+
+    <script>
+        let from=null;
+        let start= 0;
+        let url = 'http://localhost/chat.php'
+
+        $(document).ready(function(){
+            from=prompt('Por favor ingrese su nombre'); 
+            load();
+
+            $('form').submit(function(e){
+                $.post(url, {
+                    message: $('#message').val(),
+                    from: from
+                    });
+                    $('#message').val('');
+                return false;
+            })
+        })
+
+        function load(){
+            $.get(url + '?start=' + start,function(result){
+                if(result.items){
+                    result.items.forEach(item => {
+                        start = item.id;
+                        $('#messages').append(renderMessage(item));
+                    });
+                }
+                load();
+            });
+        }
+
+        function renderMessage(item){
+            console.log(item)
+        }
+        
+    </script>
+</body>
+</html>
